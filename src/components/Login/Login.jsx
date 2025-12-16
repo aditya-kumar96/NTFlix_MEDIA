@@ -1,13 +1,58 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../Header/Header'
 
 const Login = () => {
+  const [isSignInForm, setIsSignInForm] = useState(true);
+
+  const toggleSignInForm = () => {
+    setIsSignInForm(!isSignInForm)
+  }
+
   return (
     <div>
       <Header />
-      <div>
-        <img src='https://assets.nflxext.com/ffe/siteui/vlv3/a92a67ee-cd07-46a8-8354-c431a96a97b0/web/IN-en-20251103-TRIFECTA-perspective_8a65e995-9926-414c-83c5-f7cc9af10871_large.jpg' />
+      <div className='hidden sm:block inset-0 z-0 absolute'>
+        <img
+          src='https://assets.nflxext.com/ffe/siteui/vlv3/a92a67ee-cd07-46a8-8354-c431a96a97b0/web/IN-en-20251103-TRIFECTA-perspective_8a65e995-9926-414c-83c5-f7cc9af10871_large.jpg'
+          className='w-full h-full object-cover '
+        />
+        <div className="absolute inset-0 bg-black/50" />
       </div>
+      <div className="sm:hidden absolute inset-0 z-0 bg-black" />
+      <main className='relative z-10 flex items-center justify-center min-h-[70vh] px-4 py-8'>
+        <form
+          className='w-full 
+            max-w-lg 
+            sm:max-w-md
+            bg-black/65
+            
+            text-white
+            p-6
+            sm:p-8
+            shadow-2xl
+            rounded-lg
+        '
+        >
+          <h1 className='font-bold text-3xl py-4'>{isSignInForm ? "Sign In" : "Sign Up"} </h1>
+          {!isSignInForm && <input
+            type='text'
+            placeholder='Full Name'
+            className='p-2 my-2 w-full bg-gray-500' />
+          }
+
+          <input
+            type='text'
+            placeholder='Email Address'
+            className='p-2 my-2 w-full bg-gray-500' />
+
+          <input
+            type='password'
+            placeholder='Password'
+            className='p-2 my-2 w-full bg-gray-500' />
+          <button className='p-4 my-4 bg-red-700 w-full rounded-lg'>{isSignInForm ? "Sign In" : "Sign Up"}</button>
+          <p className='py-4 cursor-pointer' onClick={toggleSignInForm}> {isSignInForm ? "New to Netflix ? Sign Up Now" : "Already User ? Sign In Now"}</p>
+        </form>
+      </main>
     </div>
 
   )
