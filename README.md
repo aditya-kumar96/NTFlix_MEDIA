@@ -8,6 +8,8 @@
 - Sign Up
 - Form Validation
 - useRef hook
+- Firebase Setup
+- Deploying app on production 
 
 # Features :- 
  - Login / Sign Up 
@@ -24,3 +26,5 @@
  - NetFlix GPT
   - Search Bar
   - Movie Suggestions
+
+
