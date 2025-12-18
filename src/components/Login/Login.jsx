@@ -1,9 +1,12 @@
-import React, { useRef, useState } from 'react'
+import React, { use, useRef, useState } from 'react'
 import Header from '../Header/Header'
 import { checkValidData } from '../../utils/validate';
+import {  createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../utils/firebase';
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  
   const email = useRef(null)
   const password = useRef(null)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -16,6 +19,39 @@ const Login = () => {
     //validate the form data
     let ans = checkValidData(email.current.value, password.current.value)
     setErrorMessage(ans !== null ? ans : '')
+    if (ans) return
+    // Sign In Sign Up Logic
+    if (!isSignInForm) {
+      //sign up the user
+      
+      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+        .then((userCredential) => {
+          // Signed up 
+          const user = userCredential.user;
+          console.log('user : ',user)
+
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode ," - ",errorMessage)
+          // ..
+        });
+    } else {
+      //sign In the user
+      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    alert('User Login Successful')
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+    }
   }
   return (
     <div>
