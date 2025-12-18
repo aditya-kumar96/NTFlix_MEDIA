@@ -5,39 +5,38 @@ import { checkValidData } from '../../utils/validate';
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const email = useRef(null)
-  const password  = useRef(null)
-  const [errorMessage,setErrorMessage] = useState(null)
+  const password = useRef(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm)
   }
 
-    const handleButtonClick=()=>{
-      //validate the form data
-      let ans = checkValidData(email.current.value,password.current.value)
-      setErrorMessage(ans !== null ? ans :''  )
-    }
+  const handleButtonClick = () => {
+    //validate the form data
+    let ans = checkValidData(email.current.value, password.current.value)
+    setErrorMessage(ans !== null ? ans : '')
+  }
   return (
     <div>
       <Header />
-      <div className='hidden sm:block inset-0 z-0 absolute'>
+      <div className='inset-0 z-0 absolute'>
         <img
           src='https://assets.nflxext.com/ffe/siteui/vlv3/a92a67ee-cd07-46a8-8354-c431a96a97b0/web/IN-en-20251103-TRIFECTA-perspective_8a65e995-9926-414c-83c5-f7cc9af10871_large.jpg'
           className='w-full h-full object-cover '
         />
         <div className="absolute inset-0 bg-black/50" />
       </div>
-      <div className="sm:hidden absolute inset-0 z-0 bg-black" />
+      {/* <div className="sm:hidden absolute inset-0 z-0 bg-black" /> */}
       <main className='relative z-10 flex items-center justify-center min-h-[70vh] px-4 py-8'>
         <form
-        onSubmit={(e)=>{
+          onSubmit={(e) => {
             e.preventDefault()
-        }}
+          }}
           className='w-full 
             max-w-lg 
             sm:max-w-md
             bg-black/65
-            
             text-white
             p-6
             sm:p-8
