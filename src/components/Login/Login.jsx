@@ -44,12 +44,14 @@ const Login = () => {
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
+    console.log(user)
     alert('User Login Successful')
     // ...
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
+    setErrorMessage(errorCode ,"- ",errorMessage)
   });
     }
   }
