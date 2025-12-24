@@ -1,22 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Browse from '../Browse/Browse'
 import Login from '../Login/Login'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, useNavigate } from 'react-router-dom'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../../utils/firebase'
+import { useDispatch } from 'react-redux'
+import { addUser, removeUser } from '../../redux/slices/userSlice'
 
 const Body = () => {
-  const Router = createBrowserRouter([
-    {
-      path:'/',
-      element:<Login/>
-    },
-    {
-      path:'/browse',
-      element:<Browse/>
-    }
-  ])
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  
+
   return (
     <div>
-     <RouterProvider router={Router}/>
+     <Text>Body</Text>
     </div>
   )
 }
