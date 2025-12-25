@@ -1,8 +1,11 @@
 import React, { use, useRef, useState } from 'react'
 import Header from '../Header/Header'
 import { checkValidData } from '../../utils/validate';
-import {  createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {  createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../../utils/firebase';
+import { useNavigate } from 'react-router-dom';
+import { addUser } from '../../redux/slices/userSlice';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -10,7 +13,10 @@ const Login = () => {
   const email = useRef(null)
   const password = useRef(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const name = useRef(null)
+  const dispatch = useDispatch()
 
+  const navigate = useNavigate()
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm)
   }
@@ -29,6 +35,17 @@ const Login = () => {
           // Signed up 
           const user = userCredential.user;
           console.log('user : ',user)
+          updateProfile(user,{
+            displayName:name.current.value,
+            photoURL:'https://avatars.githubusercontent.com/u/122636454?v=4'
+          }).then(()=>{
+            console.log(user)
+            dispatch(addUser({
+              photoURL:'https://avatars.githubusercontent.com/u/122636454?v=4',
+              displayName:user.displayName
+            }))
+            navigate("/browse")
+          })
 
           // ...
         })
@@ -44,7 +61,7 @@ const Login = () => {
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    console.log(user)
+    
     alert('User Login Successful')
     // ...
   })
@@ -85,6 +102,7 @@ const Login = () => {
           <h1 className='font-bold text-3xl py-4'>{isSignInForm ? "Sign In" : "Sign Up"} </h1>
           {!isSignInForm && <input
             type='text'
+            ref={name}
             placeholder='Full Name'
             className='p-2 my-2 w-full bg-gray-500' />
           }
